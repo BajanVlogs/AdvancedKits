@@ -41,7 +41,7 @@ class Main extends PluginBase{
         }
     }
 
-    public function onCommand(CommandSender $sender, Command $command, $label, array $args){
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
         switch(strtolower($command->getName())){
             case "kit":
                 if(!($sender instanceof Player)){
