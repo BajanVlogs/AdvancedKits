@@ -102,9 +102,9 @@ class Kit{
         }
         foreach($enchantments as $key => $name_level){
             if($key % 2 === 0){ //Name expected
-                $ench = Enchantment::getEnchantmentByName($name_level);
-            }elseif(isset($ench) and $ench !== null){
-                $item->addEnchantment($ench->setLevel($name_level));
+                $ench = Enchantment::getEnchantmentByName((string) $name_level);
+            }elseif($ench !== null){
+                $item->addEnchantment($ench->setLevel((int) $name_level));
             }
         }
         return $item;
