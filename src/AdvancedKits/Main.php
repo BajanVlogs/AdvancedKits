@@ -7,6 +7,7 @@ use AdvancedKits\lang\LangManager;
 use AdvancedKits\tasks\CoolDownTask;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
@@ -33,7 +34,15 @@ class Main extends PluginBase{
         }
         $this->getServer()->getScheduler()->scheduleDelayedRepeatingTask(new CoolDownTask($this), 1200, 1200);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-    }
+
+        // Add enchantments not registered in PocketMine
+		if (Enchantment::getEnchantmentByName("KNOCKBACK") === null){
+			Enchantment::registerEnchantment(new Enchantment(Enchantment::KNOCKBACK, "%enchantment.knockback", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
+		}
+		if (Enchantment::getEnchantmentByName("SHARPNESS") === null){
+			Enchantment::registerEnchantment(new Enchantment(Enchantment::SHARPNESS, "%enchantment.sharpness", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
+		}
+	}
 
     public function onDisable(){
         foreach($this->kits as $kit){
