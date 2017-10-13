@@ -10,6 +10,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\TextFormat;
 
 class Main extends PluginBase{
 
@@ -41,6 +42,10 @@ class Main extends PluginBase{
 		}
 		if (Enchantment::getEnchantmentByName("SHARPNESS") === null){
 			Enchantment::registerEnchantment(new Enchantment(Enchantment::SHARPNESS, "%enchantment.sharpness", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
+		}
+		$customEnchants = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
+		if ($customEnchants !== null) {
+			$this->getServer()->getLogger()->info(TextFormat::GREEN . "[Advanced Kits] Using PiggyCustomEnchants!");
 		}
 	}
 

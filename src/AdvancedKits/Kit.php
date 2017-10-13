@@ -8,6 +8,8 @@ use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\Item;
 use pocketmine\Player;
 
+use PiggyCustomEnchants\CustomEnchants\CustomEnchants;
+
 class Kit{
 
     private $ak;
@@ -103,6 +105,9 @@ class Kit{
         foreach($enchantments as $key => $name_level){
             if($key % 2 === 0){ //Name expected
                 $ench = Enchantment::getEnchantmentByName((string) $name_level);
+                if ($ench === null){
+					$ench = CustomEnchants::getEnchantByName((string) $name_level);
+				}
             }elseif($ench !== null){
                 $item->addEnchantment($ench->setLevel((int) $name_level));
             }
