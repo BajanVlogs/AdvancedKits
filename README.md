@@ -1,11 +1,12 @@
-AdvancedKits
-============
+# Introduction
 
-PocketMine-MP plugin that adds kits to your PocketMine server. Report bugs and errors to https://github.com/luca28pet/AdvancedKits/issues
+### AdvancedKits
 
-This is a simple yet useful PocketMine-MP kit plugin. For who doesn't know what kits are, they are groups of items that you can get simply by typing a command or touching a sign.
+PocketMine-MP plugin that adds kits to your PocketMine server.
 
-**Features:**
+This is a simple yet useful PocketMine-MP kit plugin. For those who don't know what kits are, they are groups of items that you can get simply by typing a command or touching a sign.
+
+# Features
 
 - Highly configurable
 - Custom permission support: give a player permission advancedkits.kitname to let him use the kit named "kitname"
@@ -18,7 +19,14 @@ This is a simple yet useful PocketMine-MP kit plugin. For who doesn't know what 
 - Execute commands with kits
 - Easy translation system
 
-**Commands:**
+# Enchantments
+
+PocketMine 1.7dev ALPHA8/9 currently only register 'protection'; AdvancedKits also registers 'sharpness' and 'knockback', and you can use 'PiggyCustomEnchants' to add more custom enchants (see PCE for the full list).
+
+Warning! some enchantments use TNT... please ensure that you have explosion protection if required.
+
+# Commands
+
 The main command: /kit
 Alias for /kit: /ak, /advancedkits .
 
@@ -27,7 +35,8 @@ Alias for /kit: /ak, /advancedkits .
 
  
 
-**Signs:**
+# Signs
+
 To let users get a kit through a sign, you can create one like this: (capitals don't matter)
 
 Line 1: [AdvancedKits]
@@ -40,32 +49,33 @@ Line 3 & 4: Whatever you like
 The default kit is: testkit.
 You can add kits editing kits.yml (see "Kit settings").
 
-**Kit Settings:**
+# Kit Settings
 
-In order to add kit you will need to edit the config kits.yml .
+In order to add kits you will need to edit the config kits.yml .
 If you open that file with bloc notes, you will be not able to edit because it will be all in one line, so open it with WordPad, Notepad ++, ...
 You can add lots of kits, but remember to keep this file format:
 
-```
----
+
 testkit:
-  # Fromat: "id:damage:count:name:ench_name:ench_level"
 
-  # If you want ONLY custom name (no enchantments): "id:damage:count:name"
+  Format: "id:damage:count:name:ench_name:ench_level"
 
-  # If you don't want enchantments or custom name: "id:damage:count"
+  If you want ONLY custom name (no enchantments): "id:damage:count:name"
 
-  # If you want ONLY enchantments (no custom name): "id:damage:count:DEFAULT:ench_name:ench_level" -- you have to put DEFAULT in the name field
+  If you don't want enchantments or custom name: "id:damage:count"
 
-  # If you want more than one enchantment just do: "id:damage:count:name:ench1_name:ench1_level:ench2_name:ench2_level"
-  # or "id:damage:count:DEFAULT:ench1_name:ench1_level:ench2_name:ench2_level" if you don't want a custom item name
+  If you want ONLY enchantments (no custom name): "id:damage:count:DEFAULT:ench_name:ench_level" -- you have to put DEFAULT in the name field
 
-  # Please note: You have to write numeric IDs
+  If you want more than one enchantment just do: "id:damage:count:name:ench1_name:ench1_level:ench2_name:ench2_level"
+  or "id:damage:count:DEFAULT:ench1_name:ench1_level:ench2_name:ench2_level" if you don't want a custom item name
+
+  Please note: You have to write numeric IDs:
+  ```
   items:
   - "260:0:10"
-  - "267:0:1:Sword Name:weapon_sharpness:3:weapon_knockback:1"
+  - "267:0:1:Sword Name:sharpness:3:knockback:1"
   helmet: "302:0:1"
-  chestplate: "303:0:1:DEFAULT:armor_protection:1"
+  chestplate: "303:0:1:DEFAULT:protection:1"
   leggings: "304:0:1:Leggings Name"
   boots: "305:0:1"
 
@@ -76,43 +86,60 @@ testkit:
     hours: 24
     minutes: 30
 
-  # Format: "name:time:amplifier"
-  # Time is in seconds
+  ```
+  Format: "name:time:amplifier"
+  
+  Time is in seconds
+  
+  ```
   effects:
   - "speed:120:2"
+  
+  ```
 
-  # If you do not use pureperms, use 'worlds' to specify in which worlds you want this kit to be used
+  If you do not use pureperms, use 'worlds' to specify in which worlds you want this kit to be used
+ 
+  ```
   worlds:
   - "kitpvp"
-  # If you do not use pureperms, use 'users' to specify which players will be able to get this kit
+  
+  If you do not use pureperms, use 'users' to specify which players will be able to get this kit
   users:
   - "luca28pet"
   - "dioconsole"
-...
-```
+  ```
 
 
 If you don't specify users or world, then the kit will be available to all users or in all worlds.
 If you have PurePerms, these parameters will be ignored unless you edit the config.yml
 
 
-**Translations:**
+# Translations
 
 You can easily translate plugin messages by editing the lang.properties file inside the plugin folder. Remember to don't change the "lang-version" parameter, as it is used for internal proposes.
 
-**Config:**
+# Main Config
+
+Users are able to get only one kit per life
+
 ```
----
-# Users are able to get only one kit per life
 one-kit-per-life: true
+```
 
-# Users are able to get a kit if they log out event if they did not die (only works if one-kit-per-life: true)
+Users are able to get a kit if they log out event if they did not die (only works if one-kit-per-life: true)
+
+```
 reset-on-logout: true
+```
 
-# Use built in permission system even if using PurePerms
+Use built in permission system even if using PurePerms
+
+```
 force-builtin-permissions: false
+```
 
-# Sign text (capitals don't matter)
+Sign text (capitals don't matter)
+
+```
 sign-text: "[AdvancedKits]"
-...
 ```
