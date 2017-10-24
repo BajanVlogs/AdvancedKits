@@ -33,11 +33,11 @@ class LangManager{
             "no-sign-on-kit" => "On this sign, the kit is not specified",
             "no-perm-sign" => "You don't have permission to create a sign kit"
         ];
-        $this->data = new Config($this->ak->getDataFolder()."lang.properties", Config::PROPERTIES, $this->defaults);
+        $this->data = new Config($this->ak->getDataFolder() . "lang.properties", Config::PROPERTIES, $this->defaults);
         if($this->data->get("lang-version") != self::LANG_VERSION){
             $this->ak->getLogger()->alert("Translation file is outdated. The old file has been renamed and a new one has been created");
-            @rename($this->ak->getDataFolder()."lang.properties", $this->ak->getDataFolder()."lang.properties.old");
-            $this->data = new Config($this->ak->getDataFolder()."lang.properties", Config::PROPERTIES, $this->defaults);
+            @rename($this->ak->getDataFolder() . "lang.properties", $this->ak->getDataFolder() . "lang.properties.old");
+            $this->data = new Config($this->ak->getDataFolder() . "lang.properties", Config::PROPERTIES, $this->defaults);
         }
     }
 
@@ -48,7 +48,7 @@ class LangManager{
         }
         $str = $this->data->get($dataKey, $this->defaults[$dataKey]);
         foreach($args as $key => $arg){
-            $str = str_replace("{%".$key."}", $arg, $str);
+            $str = str_replace("{%" . $key . "}", $arg, $str);
         }
         return $str;
     }

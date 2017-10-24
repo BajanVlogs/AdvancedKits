@@ -14,22 +14,22 @@ use pocketmine\utils\TextFormat;
 
 class Main extends PluginBase{
 
-    /**@var kit[]*/
+    /**@var kit[] */
     public $kits = [];
-    /**@var kit[]*/
+    /**@var kit[] */
     public $hasKit = [];
-    /**@var EconomyManager*/
+    /**@var EconomyManager */
     public $economy;
     public $permManager = false;
-    /**@var LangManager*/
+    /**@var LangManager */
     public $langManager;
-	/**
-	 * @var null|\pocketmine\plugin\Plugin
-	 */
-	private $customEnchants;
+    /**
+     * @var null|\pocketmine\plugin\Plugin
+     */
+    private $customEnchants;
 
     public function onEnable(){
-        @mkdir($this->getDataFolder()."cooldowns/");
+        @mkdir($this->getDataFolder() . "cooldowns/");
         $this->saveDefaultConfig();
         $this->loadKits();
         $this->economy = new EconomyManager($this);
@@ -41,17 +41,17 @@ class Main extends PluginBase{
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 
         // Add enchantments not registered in PocketMine
-		if (Enchantment::getEnchantmentByName("KNOCKBACK") === null){
-			Enchantment::registerEnchantment(new Enchantment(Enchantment::KNOCKBACK, "%enchantment.knockback", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
-		}
-		if (Enchantment::getEnchantmentByName("SHARPNESS") === null){
-			Enchantment::registerEnchantment(new Enchantment(Enchantment::SHARPNESS, "%enchantment.sharpness", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
-		}
-		$this->customEnchants = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
-		if ($this->customEnchants !== null) {
-			$this->getServer()->getLogger()->info(TextFormat::GREEN . "[Advanced Kits] Using PiggyCustomEnchants!");
-		}
-	}
+        if(Enchantment::getEnchantmentByName("KNOCKBACK") === null){
+            Enchantment::registerEnchantment(new Enchantment(Enchantment::KNOCKBACK, "%enchantment.knockback", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
+        }
+        if(Enchantment::getEnchantmentByName("SHARPNESS") === null){
+            Enchantment::registerEnchantment(new Enchantment(Enchantment::SHARPNESS, "%enchantment.sharpness", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
+        }
+        $this->customEnchants = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
+        if($this->customEnchants !== null){
+            $this->getServer()->getLogger()->info(TextFormat::GREEN . "[Advanced Kits] Using PiggyCustomEnchants!");
+        }
+    }
 
     public function onDisable(){
         foreach($this->kits as $kit){
@@ -77,7 +77,7 @@ class Main extends PluginBase{
                 }
                 $kit->handleRequest($sender);
                 return true;
-            break;
+                break;
             case "akreload":
                 foreach($this->kits as $kit){
                     $kit->save();
@@ -86,14 +86,14 @@ class Main extends PluginBase{
                 $this->loadKits();
                 $sender->sendMessage($this->langManager->getTranslation("reload"));
                 return true;
-            break;
+                break;
         }
         return true;
     }
 
     private function loadKits(){
         $this->saveResource("kits.yml");
-        $kitsData = yaml_parse_file($this->getDataFolder()."kits.yml");
+        $kitsData = yaml_parse_file($this->getDataFolder() . "kits.yml");
         $this->fixConfig($kitsData);
         foreach($kitsData as $kitName => $kitData){
             $this->kits[$kitName] = new Kit($this, $kitData, $kitName);
@@ -118,7 +118,7 @@ class Main extends PluginBase{
      * @return Kit|null
      */
     public function getKit(string $kit){
-        /**@var Kit[] $lowerKeys*/
+        /**@var Kit[] $lowerKeys */
         $lowerKeys = array_change_key_case($this->kits, CASE_LOWER);
         if(isset($lowerKeys[strtolower($kit)])){
             return $lowerKeys[strtolower($kit)];
@@ -127,7 +127,7 @@ class Main extends PluginBase{
     }
 
     /**
-     * @param $player
+     * @param      $player
      * @param bool $object whether to return the kit object or the kit name
      * @return kit|null
      */

@@ -26,8 +26,8 @@ class Kit{
         if(isset($this->data["money"]) and $this->data["money"] != 0){
             $this->cost = (int) $this->data["money"];
         }
-        if(file_exists($this->ak->getDataFolder()."cooldowns/".strtolower($this->name).".sl")){
-            $this->coolDowns = unserialize(file_get_contents($this->ak->getDataFolder()."cooldowns/".strtolower($this->name).".sl"));
+        if(file_exists($this->ak->getDataFolder() . "cooldowns/" . strtolower($this->name) . ".sl")){
+            $this->coolDowns = unserialize(file_get_contents($this->ak->getDataFolder() . "cooldowns/" . strtolower($this->name) . ".sl"));
         }
     }
 
@@ -158,7 +158,7 @@ class Kit{
     }
 
     private function testPermission(Player $player) : bool{
-        return $this->ak->permManager ? $player->hasPermission("advancedkits.".strtolower($this->name)) : (
+        return $this->ak->permManager ? $player->hasPermission("advancedkits." . strtolower($this->name)) : (
             (isset($this->data["users"]) ? in_array(strtolower($player->getName()), $this->data["users"]) : true)
             and
             (isset($this->data["worlds"]) ? in_array(strtolower($player->getLevel()->getName()), $this->data["worlds"]) : true)
@@ -167,7 +167,7 @@ class Kit{
 
     public function save(){
         if(count($this->coolDowns) > 0){
-            file_put_contents($this->ak->getDataFolder()."cooldowns/".strtolower($this->name).".sl", serialize($this->coolDowns));
+            file_put_contents($this->ak->getDataFolder() . "cooldowns/" . strtolower($this->name) . ".sl", serialize($this->coolDowns));
         }
     }
 
