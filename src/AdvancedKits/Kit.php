@@ -7,9 +7,7 @@ use pocketmine\entity\Effect;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\Item;
 use pocketmine\Player;
-
 use PiggyCustomEnchants\CustomEnchants\CustomEnchants;
-use pocketmine\Server;
 
 class Kit{
 
@@ -107,17 +105,15 @@ class Kit{
         foreach($enchantments as $key => $name_level){
             if($key % 2 === 0){ //Name expected
                 $ench = Enchantment::getEnchantmentByName((string) $name_level);
-                if ($ench === null){
-					$ench = CustomEnchants::getEnchantByName((string) $name_level);
-				}
+                if($ench === null){
+                    $ench = CustomEnchants::getEnchantByName((string) $name_level);
+                }
             }elseif($ench !== null){
-            	if($ench instanceof CustomEnchants){
-            		/** @var \PiggyCustomEnchants\Main $customEnchants */
-					$customEnchants = Server::getInstance()->getPluginManager()->getPlugin("PiggyCustomEnchants");
-					$customEnchants->addEnchantment($item, $ench,(int) $name_level);
-				}else {
-					$item->addEnchantment($ench->setLevel((int) $name_level));
-				}
+                if($this->ak !== null && $ench instanceof CustomEnchants){
+                    $this->ak->addEnchantment($item, $ench, (int) $name_level);
+                }else{
+                    $item->addEnchantment($ench->setLevel((int) $name_level));
+                }
             }
         }
         return $item;

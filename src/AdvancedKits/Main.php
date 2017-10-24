@@ -23,6 +23,10 @@ class Main extends PluginBase{
     public $permManager = false;
     /**@var LangManager*/
     public $langManager;
+	/**
+	 * @var null|\pocketmine\plugin\Plugin
+	 */
+	private $customEnchants;
 
     public function onEnable(){
         @mkdir($this->getDataFolder()."cooldowns/");
@@ -43,8 +47,8 @@ class Main extends PluginBase{
 		if (Enchantment::getEnchantmentByName("SHARPNESS") === null){
 			Enchantment::registerEnchantment(new Enchantment(Enchantment::SHARPNESS, "%enchantment.sharpness", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
 		}
-		$customEnchants = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
-		if ($customEnchants !== null) {
+		$this->customEnchants = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
+		if ($this->customEnchants !== null) {
 			$this->getServer()->getLogger()->info(TextFormat::GREEN . "[Advanced Kits] Using PiggyCustomEnchants!");
 		}
 	}
