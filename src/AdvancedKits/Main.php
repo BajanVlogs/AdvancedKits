@@ -9,8 +9,11 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
+
+use PiggyCustomEnchants;
 
 class Main extends PluginBase{
 
@@ -23,10 +26,8 @@ class Main extends PluginBase{
     public $permManager = false;
     /**@var LangManager */
     public $langManager;
-    /**
-     * @var null|\pocketmine\plugin\Plugin
-     */
-    private $customEnchants;
+    /** @var null|PiggyCustomEnchants\Main */
+    public $piggyEnchants;
 
     public function onEnable(){
         @mkdir($this->getDataFolder() . "cooldowns/");
@@ -47,8 +48,8 @@ class Main extends PluginBase{
         if(Enchantment::getEnchantmentByName("SHARPNESS") === null){
             Enchantment::registerEnchantment(new Enchantment(Enchantment::SHARPNESS, "%enchantment.sharpness", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
         }
-        $this->customEnchants = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
-        if($this->customEnchants !== null){
+        $this->piggyEnchants = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
+        if($this->piggyEnchants !== null){
             $this->getServer()->getLogger()->info(TextFormat::GREEN . "[Advanced Kits] Using PiggyCustomEnchants!");
         }
     }
