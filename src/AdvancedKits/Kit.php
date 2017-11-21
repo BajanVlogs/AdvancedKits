@@ -65,36 +65,40 @@ class Kit{
         return false;
     }
 
-    public function addTo(Player $player){
-        $inv = $player->getInventory();
-        foreach($this->data["items"] as $itemString){
-            $inv->setItem($inv->firstEmpty(), $i = $this->loadItem(...explode(":", $itemString)));
-        }
+	public function addTo(Player $player){
+		$inv = $player->getInventory();
+		if(count($inv->getContents()) + count($this->data["items"]) > $inv->getSize()){
+			$player->sendMessage($this->ak->langManager->getTranslation("inventory-error"));
+			return;
+		}
+		foreach($this->data["items"] as $itemString){
+			$inv->setItem($inv->firstEmpty(), $i = $this->loadItem(...explode(":", $itemString)));
+		}
 
-        isset($this->data["helmet"]) and $inv->setHelmet($this->loadItem(...explode(":", $this->data["helmet"])));
-        isset($this->data["chestplate"]) and $inv->setChestplate($this->loadItem(...explode(":", $this->data["chestplate"])));
-        isset($this->data["leggings"]) and $inv->setLeggings($this->loadItem(...explode(":", $this->data["leggings"])));
-        isset($this->data["boots"]) and $inv->setBoots($this->loadItem(...explode(":", $this->data["boots"])));
+		isset($this->data["helmet"]) and $inv->setHelmet($this->loadItem(...explode(":", $this->data["helmet"])));
+		isset($this->data["chestplate"]) and $inv->setChestplate($this->loadItem(...explode(":", $this->data["chestplate"])));
+		isset($this->data["leggings"]) and $inv->setLeggings($this->loadItem(...explode(":", $this->data["leggings"])));
+		isset($this->data["boots"]) and $inv->setBoots($this->loadItem(...explode(":", $this->data["boots"])));
 
-        if(isset($this->data["effects"])){
-            foreach($this->data["effects"] as $effectString){
-                $e = $this->loadEffect(...explode(":", $effectString));
-                if($e !== null){
-                    $player->addEffect($e);
-                }
-            }
-        }
+		if(isset($this->data["effects"])){
+			foreach($this->data["effects"] as $effectString){
+				$e = $this->loadEffect(...explode(":", $effectString));
+				if($e !== null){
+					$player->addEffect($e);
+				}
+			}
+		}
 
-        if(isset($this->data["commands"]) and is_array($this->data["commands"])){
-            foreach($this->data["commands"] as $cmd){
-                $this->ak->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{player}", $player->getName(), $cmd));
-            }
-        }
-        if($this->coolDown){
-            $this->coolDowns[strtolower($player->getName())] = $this->coolDown;
-        }
-        $this->ak->hasKit[strtolower($player->getName())] = $this;
-    }
+		if(isset($this->data["commands"]) and is_array($this->data["commands"])){
+			foreach($this->data["commands"] as $cmd){
+				$this->ak->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{player}", $player->getName(), $cmd));
+			}
+		}
+		if($this->coolDown){
+			$this->coolDowns[strtolower($player->getName())] = $this->coolDown;
+		}
+		$this->ak->hasKit[strtolower($player->getName())] = $this;
+	}
 
     private function loadItem(int $id = 0, int $damage = 0, int $count = 1, string $name = "default", ...$enchantments) : Item{
         $item = Item::get($id, $damage, $count);

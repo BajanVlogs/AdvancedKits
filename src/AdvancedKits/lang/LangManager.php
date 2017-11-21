@@ -31,7 +31,8 @@ class LangManager{
             "cooldown-format2" => "{%0} hours and {%1} minutes",
             "cooldown-format3" => "{%0} hours",
             "no-sign-on-kit" => "On this sign, the kit is not specified",
-            "no-perm-sign" => "You don't have permission to create a sign kit"
+            "no-perm-sign" => "You don't have permission to create a sign kit",
+			"inventory-error" => "You do not have enough space in your inventory"
         ];
         $this->data = new Config($this->ak->getDataFolder() . "lang.properties", Config::PROPERTIES, $this->defaults);
         if($this->data->get("lang-version") != self::LANG_VERSION){
