@@ -5,9 +5,9 @@ namespace AdvancedKits;
 use pocketmine\command\ConsoleCommandSender;
 use pocketmine\entity\Effect;
 use pocketmine\item\enchantment\Enchantment;
+use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\item\Item;
 use pocketmine\Player;
-use PiggyCustomEnchants\CustomEnchants\CustomEnchants;
 
 class Kit{
 
@@ -26,8 +26,8 @@ class Kit{
         if(isset($this->data["money"]) and $this->data["money"] != 0){
             $this->cost = (int) $this->data["money"];
         }
-        if(file_exists($this->ak->getDataFolder() . "cooldowns/" . strtolower($this->name) . ".sl")){
-            $this->coolDowns = unserialize(file_get_contents($this->ak->getDataFolder() . "cooldowns/" . strtolower($this->name) . ".sl"));
+        if(file_exists($this->ak->getDataFolder()."cooldowns/".strtolower($this->name).".sl")){
+            $this->coolDowns = unserialize(file_get_contents($this->ak->getDataFolder()."cooldowns/".strtolower($this->name).".sl"));
         }
     }
 
@@ -65,60 +65,48 @@ class Kit{
         return false;
     }
 
-	public function addTo(Player $player){
-		$inv = $player->getInventory();
-		if(count($inv->getContents()) + count($this->data["items"]) > $inv->getSize()){
-			$player->sendMessage($this->ak->langManager->getTranslation("inventory-error"));
-			return;
-		}
-		foreach($this->data["items"] as $itemString){
-			$inv->setItem($inv->firstEmpty(), $i = $this->loadItem(...explode(":", $itemString)));
-		}
+    public function addTo(Player $player){
+        $inv = $player->getInventory();
+        foreach($this->data["items"] as $itemString){
+            $inv->setItem($inv->firstEmpty(), $i = $this->loadItem(...explode(":", $itemString)));
+        }
 
-		isset($this->data["helmet"]) and $inv->setHelmet($this->loadItem(...explode(":", $this->data["helmet"])));
-		isset($this->data["chestplate"]) and $inv->setChestplate($this->loadItem(...explode(":", $this->data["chestplate"])));
-		isset($this->data["leggings"]) and $inv->setLeggings($this->loadItem(...explode(":", $this->data["leggings"])));
-		isset($this->data["boots"]) and $inv->setBoots($this->loadItem(...explode(":", $this->data["boots"])));
+        isset($this->data["helmet"]) and $inv->setHelmet($this->loadItem(...explode(":", $this->data["helmet"])));
+        isset($this->data["chestplate"]) and $inv->setChestplate($this->loadItem(...explode(":", $this->data["chestplate"])));
+        isset($this->data["leggings"]) and $inv->setLeggings($this->loadItem(...explode(":", $this->data["leggings"])));
+        isset($this->data["boots"]) and $inv->setBoots($this->loadItem(...explode(":", $this->data["boots"])));
 
-		if(isset($this->data["effects"])){
-			foreach($this->data["effects"] as $effectString){
-				$e = $this->loadEffect(...explode(":", $effectString));
-				if($e !== null){
-					$player->addEffect($e);
-				}
-			}
-		}
+        if(isset($this->data["effects"])){
+            foreach($this->data["effects"] as $effectString){
+                $e = $this->loadEffect(...explode(":", $effectString));
+                if($e !== null){
+                    $player->addEffect($e);
+                }
+            }
+        }
 
-		if(isset($this->data["commands"]) and is_array($this->data["commands"])){
-			foreach($this->data["commands"] as $cmd){
-				$this->ak->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{player}", $player->getName(), $cmd));
-			}
-		}
-		if($this->coolDown){
-			$this->coolDowns[strtolower($player->getName())] = $this->coolDown;
-		}
-		$this->ak->hasKit[strtolower($player->getName())] = $this;
-	}
+        if(isset($this->data["commands"]) and is_array($this->data["commands"])){
+            foreach($this->data["commands"] as $cmd){
+                $this->ak->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{player}", $player->getName(), $cmd));
+            }
+        }
+        if($this->coolDown){
+            $this->coolDowns[strtolower($player->getName())] = $this->coolDown;
+        }
+        $this->ak->hasKit[strtolower($player->getName())] = $this;
+    }
 
     private function loadItem(int $id = 0, int $damage = 0, int $count = 1, string $name = "default", ...$enchantments) : Item{
         $item = Item::get($id, $damage, $count);
         if(strtolower($name) !== "default"){
             $item->setCustomName($name);
         }
-        $ench = null;
         foreach($enchantments as $key => $name_level){
             if($key % 2 === 0){ //Name expected
-                $ench = Enchantment::getEnchantmentByName((string) $name_level);
-                if($ench === null){
-                    $ench = CustomEnchants::getEnchantmentByName((string) $name_level);
+                $ench = Enchantment::getEnchantmentByName($name_level);
+            }elseif(isset($ench) and $ench !== null){
+                $item->addEnchantment(new EnchantmentInstance($ench, (int) $name_level)); 
                 }
-            }elseif($ench !== null){
-                if($this->ak->piggyEnchants !== null && $ench instanceof CustomEnchants){
-                    $this->ak->piggyEnchants->addEnchantment($item, $ench->getName(), (int) $name_level);
-                }else{
-                    $item->addEnchantment($ench->setLevel((int) $name_level));
-                }
-            }
         }
         return $item;
     }
@@ -162,7 +150,7 @@ class Kit{
     }
 
     private function testPermission(Player $player) : bool{
-        return $this->ak->permManager ? $player->hasPermission("advancedkits." . strtolower($this->name)) : (
+        return $this->ak->permManager ? $player->hasPermission("advancedkits.".strtolower($this->name)) : (
             (isset($this->data["users"]) ? in_array(strtolower($player->getName()), $this->data["users"]) : true)
             and
             (isset($this->data["worlds"]) ? in_array(strtolower($player->getLevel()->getName()), $this->data["worlds"]) : true)
@@ -171,7 +159,7 @@ class Kit{
 
     public function save(){
         if(count($this->coolDowns) > 0){
-            file_put_contents($this->ak->getDataFolder() . "cooldowns/" . strtolower($this->name) . ".sl", serialize($this->coolDowns));
+            file_put_contents($this->ak->getDataFolder()."cooldowns/".strtolower($this->name).".sl", serialize($this->coolDowns));
         }
     }
 
