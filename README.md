@@ -4,8 +4,6 @@
 
 PocketMine-MP plugin that adds kits to your PocketMine server.
 
-[![Poggit Release](https://poggit.pmmp.io/shield.approved/AdvancedKits)](https://poggit.pmmp.io/p/AdvancedKits)
-
 This is a simple yet useful PocketMine-MP kit plugin. For those who don't know what kits are, they are groups of items that you can get simply by typing a command or touching a sign.
 
 # Features
@@ -23,7 +21,7 @@ This is a simple yet useful PocketMine-MP kit plugin. For those who don't know w
 
 # Enchantments
 
-PocketMine 1.7dev ALPHA8/9 currently only register 'protection'; AdvancedKits also registers 'sharpness' and 'knockback', and you can use 'PiggyCustomEnchants' to add more custom enchants (see PCE for the full list).
+PocketMine 1.7dev ALPHA8/9/10 currently only register 'protection'; AdvancedKits also registers 'sharpness' and 'knockback', and you can use 'PiggyCustomEnchants' to add more custom enchants (see PCE for the full list). Also you can use VanillaEnchants by AZ or You can use TeaSpoon by CortexPE
 
 Warning! some enchantments use TNT... please ensure that you have explosion protection if required.
 
