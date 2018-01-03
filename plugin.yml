@@ -2,7 +2,7 @@ name: AdvancedKits
 main: AdvancedKits\Main
 version: 5.1.0-10
 api: [3.0.0-ALPHA8, 3.0.0-ALPHA9, 3.0.0-ALPHA10]
-author: luca28pet
+author: luca28pet, BajanVlogs
 softdepend: ["PiggyCustomEnchants"]
 description: Add kits to your server
 website: https://github.com/luca28pet/AdvancedKits
