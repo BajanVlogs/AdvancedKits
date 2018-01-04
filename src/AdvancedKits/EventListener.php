@@ -13,7 +13,7 @@ use pocketmine\utils\TextFormat;
 
 class EventListener implements Listener{
 
-    /**@var Main */
+    /**@var Main*/
     private $ak;
 
     public function __construct(Main $ak){
