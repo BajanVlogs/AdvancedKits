@@ -7,30 +7,23 @@ use AdvancedKits\lang\LangManager;
 use AdvancedKits\tasks\CoolDownTask;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\item\enchantment\Enchantment;
 use pocketmine\Player;
-use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginBase;
-use pocketmine\utils\TextFormat;
-
-use PiggyCustomEnchants;
 
 class Main extends PluginBase{
 
-    /**@var kit[] */
+    /**@var kit[]*/
     public $kits = [];
-    /**@var kit[] */
+    /**@var kit[]*/
     public $hasKit = [];
-    /**@var EconomyManager */
+    /**@var EconomyManager*/
     public $economy;
     public $permManager = false;
-    /**@var LangManager */
+    /**@var LangManager*/
     public $langManager;
-    /** @var null|PiggyCustomEnchants\Main */
-    public $piggyEnchants;
 
     public function onEnable(){
-        @mkdir($this->getDataFolder() . "cooldowns/");
+        @mkdir($this->getDataFolder()."cooldowns/");
         $this->saveDefaultConfig();
         $this->loadKits();
         $this->economy = new EconomyManager($this);
@@ -40,18 +33,6 @@ class Main extends PluginBase{
         }
         $this->getServer()->getScheduler()->scheduleDelayedRepeatingTask(new CoolDownTask($this), 1200, 1200);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-
-        // Add enchantments not registered in PocketMine
-        if(Enchantment::getEnchantmentByName("KNOCKBACK") === null){
-            Enchantment::registerEnchantment(new Enchantment(Enchantment::KNOCKBACK, "%enchantment.knockback", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
-        }
-        if(Enchantment::getEnchantmentByName("SHARPNESS") === null){
-            Enchantment::registerEnchantment(new Enchantment(Enchantment::SHARPNESS, "%enchantment.sharpness", Enchantment::RARITY_COMMON, Enchantment::ACTIVATION_SELF, Enchantment::SLOT_NONE));
-        }
-        $this->piggyEnchants = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
-        if($this->piggyEnchants !== null){
-            $this->getServer()->getLogger()->info(TextFormat::GREEN . "[Advanced Kits] Using PiggyCustomEnchants!");
-        }
     }
 
     public function onDisable(){
@@ -78,7 +59,6 @@ class Main extends PluginBase{
                 }
                 $kit->handleRequest($sender);
                 return true;
-                break;
             case "akreload":
                 foreach($this->kits as $kit){
                     $kit->save();
@@ -87,14 +67,13 @@ class Main extends PluginBase{
                 $this->loadKits();
                 $sender->sendMessage($this->langManager->getTranslation("reload"));
                 return true;
-                break;
         }
         return true;
     }
 
     private function loadKits(){
         $this->saveResource("kits.yml");
-        $kitsData = yaml_parse_file($this->getDataFolder() . "kits.yml");
+        $kitsData = yaml_parse_file($this->getDataFolder()."kits.yml");
         $this->fixConfig($kitsData);
         foreach($kitsData as $kitName => $kitData){
             $this->kits[$kitName] = new Kit($this, $kitData, $kitName);
@@ -119,7 +98,7 @@ class Main extends PluginBase{
      * @return Kit|null
      */
     public function getKit(string $kit){
-        /**@var Kit[] $lowerKeys */
+        /**@var Kit[] $lowerKeys*/
         $lowerKeys = array_change_key_case($this->kits, CASE_LOWER);
         if(isset($lowerKeys[strtolower($kit)])){
             return $lowerKeys[strtolower($kit)];
@@ -128,7 +107,7 @@ class Main extends PluginBase{
     }
 
     /**
-     * @param      $player
+     * @param $player
      * @param bool $object whether to return the kit object or the kit name
      * @return kit|null
      */
