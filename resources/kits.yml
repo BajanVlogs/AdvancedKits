@@ -1,6 +1,6 @@
 ---
-testkit:
-  # Fromat: "id:damage:count:name:ench_name:ench_level"
+Baby:
+  # Format: "id:damage:count:name:ench_name:ench_level"
 
   # If you want ONLY custom name (no enchantments): "id:damage:count:name"
 
@@ -13,30 +13,83 @@ testkit:
 
   # Please note: You have to write numeric IDs
   items:
+  - "267:0:1:§dBaby Sword:sharpness:5"
+  - "257:0:1:§dBaby Pickaxe:efficiency:5"
+  - "258:0:1:§dBaby Axe:efficiency:5"
+  - "277:0:1:§4OP Shovel:efficiency:5"
   - "260:0:10"
-  - "267:0:1:Sword Name:weapon_sharpness:3:weapon_knockback:1"
-  helmet: "302:0:1"
-  chestplate: "303:0:1:DEFAULT:armor_protection:1"
-  leggings: "304:0:1:Leggings Name"
-  boots: "305:0:1"
+  - "322:0:1"
+  - "17:0:32"
+  - "49:0:16"
+  - "50:0:16"
+  helmet: "310:0:1:§dBaby Helmet:protection:6"
+  chestplate: "311:0:1:§dBaby Chestplate:protection:6"
+  leggings: "312:0:1:§dBaby Leggings:protection:6"
+  boots: "313:0:1:§dBaby Boots:protection:6"
 
   commands:
-  - "tell {player} you got an awesome kit thanks to AdvancedKits plugin!"
+  - "tell {player} §a You have gotten Baby Kit!"
+  - "effect {player} speed 1000000 1"
 
   cooldown:
-    hours: 24
-    minutes: 30
+    hours: 12
+    minutes: 0
 
   # Format: "name:time:amplifier"
   # Time is in seconds
   effects:
-  - "speed:120:2"
 
   # If you do not use pureperms, use 'worlds' to specify in which worlds you want this kit to be used
   worlds:
-  - "kitpvp"
+  - "world2"
   # If you do not use pureperms, use 'users' to specify which players will be able to get this kit
   users:
   - "luca28pet"
   - "dioconsole"
-...
+  Lord:
+  # Format: "id:damage:count:name:ench_name:ench_level"
+
+  # If you want ONLY custom name (no enchantments): "id:damage:count:name"
+
+  # If you don't want enchantments or custom name: "id:damage:count"
+
+  # If you want ONLY enchantments (no custom name): "id:damage:count:DEFAULT:ench_name:ench_level" -- you have to put DEFAULT in the name field
+
+  # If you want more than one enchantment just do: "id:damage:count:name:ench1_name:ench1_level:ench2_name:ench2_level"
+  # or "id:damage:count:DEFAULT:ench1_name:ench1_level:ench2_name:ench2_level" if you don't want a custom item name
+
+  # Please note: You have to write numeric IDs
+  items:
+  - "267:0:1:§aLord Sword:sharpness:4"
+  - "257:0:1:§aLord Pickaxe:efficiency:4"
+  - "258:0:1:§aLord Axe:efficiency:4"
+  - "277:0:1:§4OP Shovel:efficiency:4"
+  - "260:0:10"
+  - "322:0:1"
+  - "17:0:32"
+  - "49:0:16"
+  - "50:0:16"
+  helmet: "310:0:1:§aLord Helmet:protection:5"
+  chestplate: "311:0:1:§aLord Chestplate:protection:5"
+  leggings: "312:0:1:§aLord Leggings:protection:5"
+  boots: "313:0:1:§aLord Boots:protection:5"
+
+  commands:
+  - "tell {player} §a You have gotten Lord Kit!"
+  - "effect {player} speed 1000000 1"
+
+  cooldown:
+    hours: 12
+    minutes: 0
+
+  # Format: "name:time:amplifier"
+  # Time is in seconds
+  effects:
+
+  # If you do not use pureperms, use 'worlds' to specify in which worlds you want this kit to be used
+  worlds:
+  - "world2"
+  # If you do not use pureperms, use 'users' to specify which players will be able to get this kit
+  users:
+  - "luca28pet"
+  - "dioconsole"
