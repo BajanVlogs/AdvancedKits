@@ -70,6 +70,7 @@ class Kit{
 
     public function addTo(Player $player){
         $inv = $player->getInventory();
+        $arm = $player->getArmorInventory();
         foreach($this->data["items"] as $itemString){
             $inv->setItem($inv->firstEmpty(), $i = $this->loadItem(...explode(":", $itemString)));
         }
@@ -78,7 +79,7 @@ class Kit{
         isset($this->data["chestplate"]) and $inv->setChestplate($this->loadItem(...explode(":", $this->data["chestplate"])));
         isset($this->data["leggings"]) and $inv->setLeggings($this->loadItem(...explode(":", $this->data["leggings"])));
         isset($this->data["boots"]) and $inv->setBoots($this->loadItem(...explode(":", $this->data["boots"])));
-     $arm->sendContents($player); 
+        $arm->sendContents($player); 
 
         if(isset($this->data["effects"])){
             foreach($this->data["effects"] as $effectString){
