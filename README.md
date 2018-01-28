@@ -21,7 +21,7 @@ This is a simple yet useful PocketMine-MP kit plugin. For those who don't know w
 
 # Enchantments
 
-PocketMine 1.7dev ALPHA8/9/10 currently only register 'protection'; AdvancedKits also registers 'sharpness' and 'knockback', and you can use 'PiggyCustomEnchants' to add more custom enchants (see PCE for the full list). Also you can use VanillaEnchants by AZ or You can use TeaSpoon by CortexPE
+PocketMine 1.7dev ALPHA8/9/10 currently only register 'protection'; AdvancedKits also registers 'sharpness' and 'knockback', and you can use 'PiggyCustomEnchants' which is coming soon to add more custom enchants (see PCE for the full list). Also you can use VanillaEnchants by AZ or You can use TeaSpoon by CortexPE
 
 Warning! some enchantments use TNT... please ensure that you have explosion protection if required.
 
