@@ -9,7 +9,6 @@ use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\inventory\PlayerInventory;
-use pocketmine/inventory/ArmorInventory;
 
 class Kit{
 
