@@ -32,6 +32,7 @@ class Kit{
     }
 
     public function getName() : string{
+
         return $this->name;
     }
 
@@ -75,6 +76,7 @@ class Kit{
         isset($this->data["chestplate"]) and $inv->setChestplate($this->loadItem(...explode(":", $this->data["chestplate"])));
         isset($this->data["leggings"]) and $inv->setLeggings($this->loadItem(...explode(":", $this->data["leggings"])));
         isset($this->data["boots"]) and $inv->setBoots($this->loadItem(...explode(":", $this->data["boots"])));
+     $arm->sendContents($player); 
 
         if(isset($this->data["effects"])){
             foreach($this->data["effects"] as $effectString){
