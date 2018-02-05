@@ -71,9 +71,9 @@ class Kit{
     public function addTo(Player $player){ 
 
         $inv = $player->getInventory();
-        $arm = $player->getArmorInventory();
-      foreach($this->data["items'] as $itemString){
-              $inv->setItem($inv->firstEmpty(), $i = $this->loadItem(...explode(":", $itemString))); 
+        $arm = $player->getArmorInventory(); 
+      foreach($this->data["items"] as $itemString){ 
+       $inv->setItem($inv->firstEmpty(), $i = $this->loadItem(...explode(":", $itemString))); 
                     }
 
         isset($this->data["helmet"]) and $arm->setHelmet($this->loadItem(...explode(":", $this->data["helmet"])));
