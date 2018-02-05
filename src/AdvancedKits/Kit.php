@@ -68,7 +68,7 @@ class Kit{
     }
 
     
-    public function addTo(Player $player){
+    public function addTo(Player $player){ 
 
         $inv = $player->getInventory();
         $arm = $player->getArmorInventory();
