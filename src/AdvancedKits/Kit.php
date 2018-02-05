@@ -67,12 +67,54 @@ class Kit{
         return false;
     }
 
-    public function addTo(Player $player){
+    
+    public function add(Player $player){
+
         $inv = $player->getInventory();
-        $arm = $player->getArmorInventory();
-        foreach($this->data["items"] as $itemString){
-            $inv->setItem($inv->firstEmpty(), $i = $this->loadItem(...explode(":", $itemString)));
-        }
+
+	$arm = $player->getArmorInventory();
+
+		
+
+		if($this->pl->config->get("clear-inventory")){
+
+			$inv->clearAll();
+
+			$player->getCraftingGrid()->clearAll();
+
+		}
+
+		
+
+		if(!$this->pl->config->get("start-from-first")){
+
+			if(count($this->data["items"]) + count($inv->getContents()) > $inv->getSize()){
+
+				$player->sendMessage($this->pl->language->getTranslation("inv-full"));
+
+				return;
+
+			}
+
+			foreach($this->data["items"] as $itemString){
+
+				$inv->setItem($inv->firstEmpty(), $i = $this->loadItem(...explode(":", $itemString)));
+
+			}
+
+		}
+
+		else{
+
+			$tag = 0;
+
+			foreach($this->data["items"] as $itemString){
+
+				$inv->setItem($tag++, $i = $this->loadItem(...explode(":", $itemString)));
+
+			}
+
+		}
 
         isset($this->data["helmet"]) and $arm->setHelmet($this->loadItem(...explode(":", $this->data["helmet"])));
         isset($this->data["chestplate"]) and $arm->setChestplate($this->loadItem(...explode(":", $this->data["chestplate"])));
