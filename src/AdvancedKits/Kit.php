@@ -118,7 +118,7 @@ class Kit{
     }
 
     private function loadEffect(string $name = "INVALID", int $seconds = 60, int $amplifier = 1){
-        $e = Effect::getEffectByName($name);
+        $e = new EffectInstance(Effect::getEffectByName($name));
         if($e !== null){
             return $e->setDuration($seconds * 20)->setAmplifier($amplifier);
         }
